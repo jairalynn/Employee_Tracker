@@ -1,0 +1,25 @@
+{
+  "name": "hw12",
+  "version": "1.0.0",
+  "description": "<!-- [![Demo](https://img.youtube.com/vi/Y3fuixizR1I/0.jpg)](http://www.youtube.com/watch?v=Y3fuixizR1I) -->",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puakehaulani/Employee_Tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/puakehaulani/Employee_Tracker/issues"
+  },
+  "homepage": "https://github.com/puakehaulani/Employee_Tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^7.3.3",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.6"
+  }
+}

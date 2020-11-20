@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[Explore the docs]()
+[Explore the docs](https://github.com/puakehaulani/Employee_Tracker)
 
 ---
 
