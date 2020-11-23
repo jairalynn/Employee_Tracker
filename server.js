@@ -6,54 +6,70 @@ require("dotenv").config();
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
-    user: process.env.USER,
-    password: process.env.PW,
+    user: "root",
+    password: "h00kelex3",
     database: "employeesDB"
 });
 
 connection.connect(function (err) {
     if (err) throw err;
-    // runSearch();
+    runSearch();
 });
 
-// function runSearch() {
-//     inquirer
-//         .prompt({
-//             name: "action",
-//             type: "rawlist",
-//             message: "What would you like to do?",
-//             choices: [
-//                 "Find songs by artist",
-//                 "Find all artists who appear more than once",
-//                 "Find data within a specific range",
-//                 "Search for a specific song",
-//                 "Find artists with a top song and top album in the same year"
-//             ]
-//         })
-//         .then(function (answer) {
-//             switch (answer.action) {
-//                 case "Find songs by artist":
-//                     artistSearch();
-//                     break;
+function runSearch() {
+    inquirer
+        .prompt({
+            name: "action",
+            type: "list",
+            message: "What would you like to do?",
+            choices: [
+                "View all employees",
+                // "View employees by department",
+                // "View employees by manager",
+                // "Add employee",
+                // "Remove employee",
+                // "Update employee role",
+                // "Update employee manager",
+                // "Delete employee",
+                "View all roles",
+                // "Add role",
+                // "Update role",
+                // "Delete role",
+                "View all departments",
+                // "Add department",
+                // "Update department",
+                // "Delete department",
+                // "View total utilized budget of department"
+            ]
+        })
+        .then(function (answer) {
+            switch (answer.action) {
+                case "View all employees":
+                    var query = "SELECT * FROM employee";
+                    connection.query(query, function (err, res) {
+                        console.table(res);
+                    });
+                    runSearch();
+                    break;
 
-//                 case "Find all artists who appear more than once":
-//                     multiSearch();
-//                     break;
+                case "View all roles":
+                    var query = "SELECT * FROM role";
+                    connection.query(query, function (err, res) {
+                        console.table(res);
+                    });
+                    runSearch();
+                    break;
 
-//                 case "Find data within a specific range":
-//                     rangeSearch();
-//                     break;
-
-//                 case "Search for a specific song":
-//                     songSearch();
-//                     break;
-
-//                 case "Find artists with a top song and top album in the same year":
-//                     songAndAlbumSearch();
-//                     break;
-//             }
-//         });
-// }
+                case "View all departments":
+                    var query = "SELECT * FROM department";
+                    connection.query(query, function (err, res) {
+                        console.table(res);
+                    });
+                    runSearch();
+                    break;
+            }
+        });
+}
 
 // function artistSearch() {
 //     inquirer
