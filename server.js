@@ -32,9 +32,9 @@ function runSearch() {
                 "Update employee role",
                 // "Update employee manager", B
                 "Add department",
-                // "Remove department", B
+                "Remove department",
                 "Add role",
-                // "Remove role", B
+                "Remove role",
                 // "View total utilized budget of department",B
                 "Quit"
             ]
@@ -88,17 +88,17 @@ function runSearch() {
                     addDepartment();
                     break;
 
-                //     case "Remove department":
-                //     
-                //     break;
+                case "Remove department":
+                    removeDepartment();
+                    break;
 
                 case "Add role":
                     addRole();
                     break;
 
-                //     case "Remove role":
-                //   
-                //     break;
+                case "Remove role":
+                    removeRole();
+                    break;
 
                 //     case "View total utilized budget of department":
                 //
@@ -118,7 +118,6 @@ function employeeByRole() {
         console.table(res);
         runSearch();
     });
-
 }
 
 
@@ -164,18 +163,13 @@ function addEmployee() {
             var query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
             var values = [answer.first_name, answer.last_name, answer.role_id, answer.manager_id];
             connection.query(query, values, function (err, res) {
-
                 var check = "SELECT * FROM employee";
                 connection.query(check, function (err, res) {
                     console.table(res);
                     runSearch();
                 });
-
             });
-
-
         })
-
 };
 
 function removeEmployee() {
@@ -197,7 +191,6 @@ function removeEmployee() {
                 choices: map1
             })
             .then(function (response) {
-
                 connection.query("DELETE FROM employee WHERE id=?;", [response.delete], function (err, res) {
                     if (err) throw err;
                     console.log(res);
@@ -219,7 +212,6 @@ function updateEmployee() {
             }
             return object
         });
-
         inquirer
             .prompt({
                 name: "update",
@@ -228,7 +220,6 @@ function updateEmployee() {
                 choices: map1
             })
             .then(function (response) {
-
                 connection.query("SELECT id, title FROM role;", function (err, res) {
                     if (err) throw err;
                     console.log(res);
@@ -258,7 +249,6 @@ function updateEmployee() {
                         })
                     })
                 })
-
             })
     });
 };
@@ -274,18 +264,42 @@ function addDepartment() {
             var query = `INSERT INTO department (name) VALUES (?)`;
             var values = [answer.name];
             connection.query(query, values, function (err, res) {
-
                 var check = "SELECT * FROM department";
                 connection.query(check, function (err, res) {
                     console.table(res);
                     runSearch();
                 });
-
             });
-
-
         })
-
+};
+function removeDepartment() {
+    connection.query("SELECT id, name FROM department;", function (err, res) {
+        if (err) throw err;
+        console.log(res);
+        const map1 = res.map(array => {
+            var object = {
+                name: `${array.name}`,
+                value: array.id
+            }
+            return object
+        });
+        inquirer
+            .prompt({
+                name: "delete",
+                type: "list",
+                message: "Choose an department to delete",
+                choices: map1
+            })
+            .then(function (response) {
+                console.log(response);
+                connection.query("DELETE FROM department WHERE id=?;", [response.delete], function (err, res) {
+                    if (err) throw err;
+                    console.log(res);
+                    runSearch();
+                }
+                );
+            })
+    })
 };
 
 function addRole() {
@@ -307,16 +321,40 @@ function addRole() {
             var query = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
             var values = [answer.title, answer.salary, answer.department_id];
             connection.query(query, values, function (err, res) {
-
                 var check = "SELECT * FROM role";
                 connection.query(check, function (err, res) {
                     console.table(res);
                     runSearch();
                 });
-
             });
-
-
         })
-
+};
+function removeRole() {
+    connection.query("SELECT id, title FROM role;", function (err, res) {
+        if (err) throw err;
+        console.log(res);
+        const map1 = res.map(array => {
+            var object = {
+                name: `${array.title}`,
+                value: array.id
+            }
+            return object
+        });
+        inquirer
+            .prompt({
+                name: "delete",
+                type: "list",
+                message: "Choose an department to delete",
+                choices: map1
+            })
+            .then(function (response) {
+                console.log(response);
+                connection.query("DELETE FROM role WHERE id=?;", [response.delete], function (err, res) {
+                    if (err) throw err;
+                    console.log(res);
+                    runSearch();
+                }
+                );
+            })
+    })
 };
