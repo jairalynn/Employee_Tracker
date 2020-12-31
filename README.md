@@ -1,6 +1,6 @@
 # Employee Tracker
 
-<!-- [![Demo](https://img.youtube.com/vi/Y3fuixizR1I/0.jpg)](http://www.youtube.com/watch?v=Y3fuixizR1I) -->
+[![Demo](https://img.youtube.com/vi/GJfGbqx1-xU/0.jpg)](http://www.youtube.com/watch?v=GJfGbqx1-xU)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
