@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "h00kelex3",
+    password: "password",
     database: "employeesDB"
 });
 
@@ -29,7 +29,7 @@ function runSearch() {
                 // "View all employees by manager", B
                 "Add employee",
                 // "Remove employee", B
-                // "Update employee role",
+                "Update employee role",
                 // "Update employee manager", B
                 // "Add department",
                 // "Remove department", B
@@ -76,9 +76,9 @@ function runSearch() {
                 //     removeEmployee();
                 //     break;
 
-                //     case "Update employee role":
-                //     updateEmployee();
-                //     break;
+                case "Update employee role":
+                    updateEmployee();
+                    break;
 
                 //     case "Update employee manager":
                 // 
@@ -184,10 +184,56 @@ function removeEmployee() {
 };
 
 function updateEmployee() {
-    connection.query("SELECT * FROM employee;", function (err, data) {
+    connection.query("SELECT id, first_name, last_name FROM employee;", function (err, res) {
         if (err) throw err;
-    }
-    
-    
-    runSearch();
-};
+        console.log(res);
+        const map1 = res.map(array => {
+            var object = {
+                name: `${array.first_name} ${array.last_name}`,
+                value: array.id
+            }
+            return object
+        });
+
+        inquirer
+            .prompt({
+                name: "update",
+                type: "list",
+                message: "Choose an employee to update",
+                choices: map1
+            })
+            .then(function (response) {
+
+                connection.query("SELECT id, title FROM role;", function (err, res) {
+                    if (err) throw err;
+                    console.log(res);
+                    const map2 = res.map(array => {
+                        var object = {
+                            name: array.title,
+                            value: array.id
+                        }
+                        return object
+                    });
+                    inquirer.prompt({
+                        name: "roleUpdate",
+                        type: "list",
+                        message: "What is the employee's new role?",
+                        choices: map2
+                    }).then(function (answer) {
+                        let values = [answer.roleUpdate, response.update];
+                        connection.query("UPDATE employee SET role_id = ? WHERE id=?", values, function (err, res) {
+                            if (err) throw err;
+
+                            connection.query("SELECT * FROM employee WHERE id=?", response.update, function (err, res) {
+                                if (err) throw err;
+                                console.table(res);
+                                runSearch();
+                            }
+                            );
+                        })
+                    })
+                })
+
+            })
+    });
+}
