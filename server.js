@@ -31,9 +31,9 @@ function runSearch() {
                 // "Remove employee", B
                 "Update employee role",
                 // "Update employee manager", B
-                // "Add department",
+                "Add department",
                 // "Remove department", B
-                // "Add role",
+                "Add role",
                 // "Remove role", B
                 // "View total utilized budget of department",B
                 "Quit"
@@ -84,17 +84,17 @@ function runSearch() {
                 // 
                 //     break;
 
-                //     case "Add department":
-                //
-                //     break;
+                case "Add department":
+                    addDepartment();
+                    break;
 
                 //     case "Remove department":
                 //     
                 //     break;
 
-                //     case "Add role":
-                //   
-                //     break;
+                case "Add role":
+                    addRole();
+                    break;
 
                 //     case "Remove role":
                 //   
@@ -236,4 +236,62 @@ function updateEmployee() {
 
             })
     });
-}
+};
+
+function addDepartment() {
+    inquirer
+        .prompt([{
+            name: "name",
+            type: "input",
+            message: "Enter department name"
+        }])
+        .then(function (answer) {
+            var query = `INSERT INTO department (name) VALUES (?)`;
+            var values = [answer.name];
+            connection.query(query, values, function (err, res) {
+
+                var check = "SELECT * FROM department";
+                connection.query(check, function (err, res) {
+                    console.table(res);
+                    runSearch();
+                });
+
+            });
+
+
+        })
+
+};
+
+function addRole() {
+    inquirer
+        .prompt([{
+            name: "title",
+            type: "input",
+            message: "Enter role title"
+        }, {
+            name: "salary",
+            type: "number",
+            message: "Enter yearly salary amount"
+        }, {
+            name: "department_id",
+            type: "number",
+            message: "Enter department id number"
+        }])
+        .then(function (answer) {
+            var query = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
+            var values = [answer.title, answer.salary, answer.department_id];
+            connection.query(query, values, function (err, res) {
+
+                var check = "SELECT * FROM role";
+                connection.query(check, function (err, res) {
+                    console.table(res);
+                    runSearch();
+                });
+
+            });
+
+
+        })
+
+};
