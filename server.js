@@ -175,7 +175,6 @@ function addEmployee() {
 function removeEmployee() {
     connection.query("SELECT id, first_name, last_name FROM employee;", function (err, res) {
         if (err) throw err;
-        console.log(res);
         const map1 = res.map(array => {
             var object = {
                 name: `${array.first_name} ${array.last_name}`,
@@ -193,7 +192,6 @@ function removeEmployee() {
             .then(function (response) {
                 connection.query("DELETE FROM employee WHERE id=?;", [response.delete], function (err, res) {
                     if (err) throw err;
-                    console.log(res);
                     runSearch();
                 }
                 );
@@ -204,7 +202,6 @@ function removeEmployee() {
 function updateEmployee() {
     connection.query("SELECT id, first_name, last_name FROM employee;", function (err, res) {
         if (err) throw err;
-        console.log(res);
         const map1 = res.map(array => {
             var object = {
                 name: `${array.first_name} ${array.last_name}`,
@@ -222,7 +219,6 @@ function updateEmployee() {
             .then(function (response) {
                 connection.query("SELECT id, title FROM role;", function (err, res) {
                     if (err) throw err;
-                    console.log(res);
                     const map2 = res.map(array => {
                         var object = {
                             name: array.title,
@@ -275,7 +271,6 @@ function addDepartment() {
 function removeDepartment() {
     connection.query("SELECT id, name FROM department;", function (err, res) {
         if (err) throw err;
-        console.log(res);
         const map1 = res.map(array => {
             var object = {
                 name: `${array.name}`,
@@ -291,10 +286,8 @@ function removeDepartment() {
                 choices: map1
             })
             .then(function (response) {
-                console.log(response);
                 connection.query("DELETE FROM department WHERE id=?;", [response.delete], function (err, res) {
                     if (err) throw err;
-                    console.log(res);
                     runSearch();
                 }
                 );
@@ -332,7 +325,6 @@ function addRole() {
 function removeRole() {
     connection.query("SELECT id, title FROM role;", function (err, res) {
         if (err) throw err;
-        console.log(res);
         const map1 = res.map(array => {
             var object = {
                 name: `${array.title}`,
@@ -348,10 +340,8 @@ function removeRole() {
                 choices: map1
             })
             .then(function (response) {
-                console.log(response);
                 connection.query("DELETE FROM role WHERE id=?;", [response.delete], function (err, res) {
                     if (err) throw err;
-                    console.log(res);
                     runSearch();
                 }
                 );
