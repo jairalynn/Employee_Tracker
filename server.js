@@ -28,7 +28,7 @@ function runSearch() {
                 "View all departments",
                 // "View all employees by manager", B
                 "Add employee",
-                // "Remove employee", B
+                "Remove employee",
                 "Update employee role",
                 // "Update employee manager", B
                 "Add department",
@@ -72,9 +72,9 @@ function runSearch() {
                     addEmployee();
                     break;
 
-                //     case "Remove employee":
-                //     removeEmployee();
-                //     break;
+                case "Remove employee":
+                    removeEmployee();
+                    break;
 
                 case "Update employee role":
                     updateEmployee();
@@ -179,8 +179,33 @@ function addEmployee() {
 };
 
 function removeEmployee() {
+    connection.query("SELECT id, first_name, last_name FROM employee;", function (err, res) {
+        if (err) throw err;
+        console.log(res);
+        const map1 = res.map(array => {
+            var object = {
+                name: `${array.first_name} ${array.last_name}`,
+                value: array.id
+            }
+            return object
+        });
+        inquirer
+            .prompt({
+                name: "delete",
+                type: "list",
+                message: "Choose an employee to delete",
+                choices: map1
+            })
+            .then(function (response) {
 
-    runSearch();
+                connection.query("DELETE FROM employee WHERE id=?;", [response.delete], function (err, res) {
+                    if (err) throw err;
+                    console.log(res);
+                    runSearch();
+                }
+                );
+            })
+    })
 };
 
 function updateEmployee() {
