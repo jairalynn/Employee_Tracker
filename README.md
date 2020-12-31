@@ -21,9 +21,14 @@
 
 ## About the Project
 
+This is a command line app for managing departments, roles, and employees. Made with node and mysql.
+Install and run the app, then follow the prompts to build your employee database.
+
 ## Usage
 
-Run the following command in your terminal
+Run the following commands in your terminal
+
+    node server.js
 
 ## Getting Started
 
@@ -31,9 +36,15 @@ To get started, follow these steps:
 
 ### Installation
 
-Run the following command in your terminal
+Run the following commands in your terminal
 
     npm i
+    mysql -u root -p
+
+enter mysql password. When in mysql, enter the following commands
+
+    source schema.sql
+    exit
 
 ## Testing
 
